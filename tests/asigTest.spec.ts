@@ -1,20 +1,20 @@
 import { test, expect, type Locator } from '@playwright/test';
 
+
+// funtional testing
 test.skip('has title', async ({ page }) => {
   await page.goto('https://demo.playwright.dev/todomvc/?utm_source=chatgpt.com#/');
 
   await expect(page).toHaveTitle(/React • TodoMVC/);
 });
 
-test('input is clikable', async ({ page }) => {
+test.skip('input is clikable', async ({ page }) => {
     await page.goto('https://demo.playwright.dev/todomvc/?utm_source=chatgpt.com#/');
 
     let locatorInputField:Locator = page.locator('.new-todo');
 
     let isVisible:boolean = await locatorInputField.isVisible();
-    // let isVisible:boolean = false;
     let isEnabled:boolean = await locatorInputField.isEnabled();
-    // let isEnabled:boolean = true;
 
     if (isVisible && isEnabled) {
         console.log("✅ The element is visible and enabled.");
@@ -23,4 +23,18 @@ test('input is clikable', async ({ page }) => {
         console.log("❌ The element is not visible or not enabled.");
         expect(isVisible && isEnabled).toBeTruthy();
     }
+});
+
+test('input creates new entry', async ({page}) => {
+    await page.goto('https://demo.playwright.dev/todomvc/?utm_source=chatgpt.com#/');
+    let locatorInputField:Locator = page.locator('.new-todo');
+    
+    let input:string = "sergiu";
+
+    await locatorInputField.fill(input);
+    await page.keyboard.press('Enter');
+
+    let inputResult:string = await page.locator('[data-testid="todo-title"]').innerText();
+
+    expect(inputResult).toEqual(input);
 });
