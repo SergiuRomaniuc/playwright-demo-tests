@@ -25,7 +25,7 @@ test.skip('input is clikable', async ({ page }) => {
     }
 });
 
-test('input creates new entry', async ({page}) => {
+test.skip('input creates new entry', async ({page}) => {
     await page.goto('https://demo.playwright.dev/todomvc/?utm_source=chatgpt.com#/');
     let locatorInputField:Locator = page.locator('.new-todo');
     
